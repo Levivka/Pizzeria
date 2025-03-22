@@ -1,0 +1,38 @@
+<!-- res/layout/fragment_edit_order.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Список заказанных блюд -->
+    <ListView
+        android:id="@+id/order_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="1dp"/>
+
+    <!-- Итоговая сумма -->
+    <TextView
+        android:id="@+id/total_amount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Итоговая сумма: $0.00"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:gravity="end"
+        android:padding="8dp"/>
+
+    <!-- Кнопка для оформления заказа -->
+    <Button
+        android:id="@+id/place_order_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Оформить заказ"
+        android:textSize="18sp"
+        android:padding="12dp"
+        android:background="@color/purple_500"
+        android:textColor="@android:color/white"/>
+</LinearLayout>

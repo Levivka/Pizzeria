@@ -1,0 +1,20 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_pizza"
+            android:icon="@drawable/ic_pizza"
+            android:title="Пицца" />
+        <item
+            android:id="@+id/nav_pasta"
+            android:icon="@drawable/ic_pasta"
+            android:title="Паста" />
+        <item
+            android:id="@+id/nav_drinks"
+            android:icon="@drawable/ic_drinks"
+            android:title="Напитки" />
+        <item
+            android:id="@+id/nav_edit_order"
+            android:icon="@drawable/ic_edit"
+            android:title="Редактирование заказа" />
+    </group>
+</menu>

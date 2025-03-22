@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="add_to_order_button" type="id" />
+    <item name="detail_price" type="id" />
+    <item name="detail_description" type="id" />
+    <item name="detail_title" type="id" />
+</resources>
