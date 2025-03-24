@@ -1,7 +1,5 @@
 package com.example.pizzeria;
 
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,9 +28,8 @@ public class PizzaFragment extends Fragment {
             // Логирование
             Log.d("PizzaFragment", "Selected item: " + selectedPizza);
 
-            Intent intent = new Intent(getActivity(), DetailActivity.class);
-            intent.putExtra("item", selectedPizza);
-            startActivityForResult(intent, MainActivity.REQUEST_CODE_ADD_ITEM); // Используем startActivityForResult
+            // Запуск DetailActivity через MainActivity
+            ((MainActivity) requireActivity()).launchDetailActivity(selectedPizza);
         });
 
         return view;

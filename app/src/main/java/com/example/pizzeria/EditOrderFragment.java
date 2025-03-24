@@ -22,76 +22,78 @@ public class EditOrderFragment extends Fragment implements MainActivity.OnOrderI
     private TextView totalAmountTextView;
     private Button placeOrderButton;
 
+    private final List<OrderItem> savedItems = new ArrayList<>();
+
+
     private Map<String, Integer> orderItems = new HashMap<>();
     private Map<String, Double> itemPrices = new HashMap<>();
     private double totalAmount = 0.0;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edit_order, container, false);
 
-        // Инициализация элементов
         orderListView = view.findViewById(R.id.order_list);
         totalAmountTextView = view.findViewById(R.id.total_amount);
         placeOrderButton = view.findViewById(R.id.place_order_button);
 
-        // Отображаем заказы
-        displayOrderItems();
-
-        // Обработка нажатия на кнопку "Оформить заказ"
-        placeOrderButton.setOnClickListener(v -> placeOrder());
+        if (orderListView == null) {
+            Log.e("EditOrderFragment", "Ошибка: orderListView не найден в макете!");
+        } else {
+            Log.d("EditOrderFragment", "orderListView успешно инициализирован.");
+        }
 
         return view;
     }
 
+
     @Override
-    public void onOrderItemAdded(String itemName, int quantity, double price) {
-        // Логирование
-        Log.d("EditOrderFragment", "Adding item: " + itemName + ", Quantity: " + quantity + ", Price: " + price);
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-        // Добавляем товар в заказ
-        orderItems.put(itemName, quantity);
-        itemPrices.put(itemName, price);
-        totalAmount += price * quantity;
+        for (OrderItem item : savedItems) {
+            orderItems.put(item.itemName, item.quantity);
+            itemPrices.put(item.itemName, item.price);
+        }
 
-        // Логирование
-        Log.d("EditOrderFragment", "Current order items: " + orderItems.toString());
-        Log.d("EditOrderFragment", "Current total amount: " + totalAmount);
-
-        // Обновляем отображение
         displayOrderItems();
+        placeOrderButton.setOnClickListener(v -> placeOrder());
     }
 
-    // Отображение списка заказов
-    private void displayOrderItems() {
-        List<String> orderList = new ArrayList<>();
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Map<String, Integer> savedItems = OrderManager.getInstance().getOrderItems();
+        if (!savedItems.isEmpty()) {
+            Log.d("EditOrderFragment", "Загружаем сохранённые заказы!");
+            for (Map.Entry<String, Integer> entry : savedItems.entrySet()) {
+                onOrderItemAdded(entry.getKey(), entry.getValue(), OrderManager.getInstance().getItemPrice(entry.getKey(), 0.0));
+            }
+        }
+    }
 
+
+
+    @Override
+    public void onOrderItemAdded(String itemName, int quantity, double price) {
+        savedItems.add(new OrderItem(itemName, quantity, price)); // Временно сохраняем товар
+        Log.d("EditOrderFragment", "Добавлен в список: " + itemName);
+    }
+
+    private void displayOrderItems() {
+        Map<String, Integer> orderItems = OrderManager.getInstance().getOrderItems();
+        double totalAmount = OrderManager.getInstance().getTotalAmount();
+
+        List<String> orderList = new ArrayList<>();
         for (Map.Entry<String, Integer> entry : orderItems.entrySet()) {
             String itemName = entry.getKey();
             int quantity = entry.getValue();
-            double price = itemPrices.getOrDefault(itemName, 0.0);
-            double itemTotal = price * quantity;
-
-            orderList.add(itemName + " x " + quantity + " = $" + formatPrice(itemTotal));
+            double price = OrderManager.getInstance().getItemPrice(itemName, 0.0);
+            orderList.add(itemName + " x " + quantity + " = $" + formatPrice(price * quantity));
         }
 
-        // Логирование
-        Log.d("EditOrderFragment", "Displaying order list: " + orderList.toString());
-
-        // Адаптер для списка заказов
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                getActivity(),
-                android.R.layout.simple_list_item_1,
-                orderList
-        );
-        orderListView.setAdapter(adapter);
-
-        // Отображение итоговой суммы
+        orderListView.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, orderList));
         totalAmountTextView.setText("Итоговая сумма: $" + formatPrice(totalAmount));
-
-        // Логирование
-        Log.d("EditOrderFragment", "Total amount displayed: $" + formatPrice(totalAmount));
     }
 
     // Оформление заказа

@@ -65,7 +65,6 @@ public class DetailActivity extends AppCompatActivity {
 
             // Логирование
             Log.d("DetailActivity", "Item added: " + itemName + ", Quantity: " + quantity + ", Price: " + itemPrice);
-            Log.d("DetailActivity", "ResultIntent data: " + resultIntent.getExtras().toString());
 
             // Устанавливаем результат и закрываем активность
             setResult(RESULT_OK, resultIntent);
@@ -105,6 +104,7 @@ public class DetailActivity extends AppCompatActivity {
         }
     }
 
+    // Метод для извлечения числового значения цены
     private double getPriceValue(String priceText) {
         // Логирование
         Log.d("DetailActivity", "Price text: " + priceText);

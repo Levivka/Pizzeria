@@ -4,4 +4,5 @@
     <item name="detail_price" type="id" />
     <item name="detail_description" type="id" />
     <item name="detail_title" type="id" />
+    <item name="drawer_layout" type="id" />
 </resources>
