@@ -1,9 +1,9 @@
 <LinearLayout android:layout_width="match_parent"
     android:layout_height="176dp"
     android:orientation="vertical"
-    android:background="@color/purple_500"
+    android:background="@drawable/ic_restaurant"
     android:padding="16dp"
-    android:gravity="bottom"
+    android:gravity="top"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -21,17 +21,8 @@
         android:id="@+id/nav_header_subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="user@example.com"
+        android:text="vkysnotisha@gmail.com"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textColor="@android:color/white"
         android:textSize="14sp" />
-
-    <ImageView
-        android:id="@+id/nav_header_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_restaurant"
-        android:contentDescription="@string/nav_header_desc"
-        android:layout_marginBottom="8dp"/>
-
 </LinearLayout>

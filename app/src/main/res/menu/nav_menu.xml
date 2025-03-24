@@ -15,6 +15,7 @@
         <item
             android:id="@+id/nav_edit_order"
             android:icon="@drawable/ic_edit"
-            android:title="Редактирование заказа" />
+            android:title="Редактирование заказа"
+            />
     </group>
 </menu>
